@@ -2,8 +2,9 @@
 <html lang="ru" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Наши Моменты | История в кадрах</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%99%A5%3C/text%3E%3C/svg%3E">
+    <title>Наши моменты • Матвей и Лиза</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Эстетичные шрифты -->
@@ -33,6 +34,7 @@
                 box-shadow: 0 10px 30px rgba(239, 68, 68, 0.15);
             }
         }
+        .polaroid { cursor: zoom-in; }
         /* Деликатное покачивание при тапе на телефоне и наведении на ПК */
         .polaroid:hover, .polaroid:active {
             transform: rotate(1deg) scale(1.02);
@@ -100,9 +102,236 @@
             #music-player .mp-label { display: none; }
             #music-player { padding: 6px; }
         }
+
+        /* ===== Чистая сетка фото (без подписей) ===== */
+        .photo-grid {
+            display: grid;
+            gap: 12px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        @media (min-width: 640px) {
+            .photo-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+        }
+        @media (min-width: 1024px) {
+            .photo-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+        }
+        .photo-cell {
+            position: relative;
+            overflow: hidden;
+            border-radius: 18px;
+            aspect-ratio: 3 / 4;
+            background: #241014;
+            border: 1px solid rgba(239, 68, 68, 0.18);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+            cursor: zoom-in;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .photo-cell img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform .7s cubic-bezier(.2, .7, .2, 1);
+        }
+        .photo-cell::after {
+            content: "";
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(26, 5, 8, .5), transparent 60%);
+            opacity: .75;
+            transition: opacity .45s ease;
+            pointer-events: none;
+        }
+        .photo-cell:hover img, .photo-cell:active img { transform: scale(1.07); }
+        .photo-cell:hover::after { opacity: .3; }
+        .photo-cell:hover {
+            border-color: rgba(239, 68, 68, 0.55);
+            box-shadow: 0 16px 40px rgba(239, 68, 68, 0.28);
+        }
+
+        /* ===== Просмотр фото во весь экран ===== */
+        #lightbox {
+            position: fixed; inset: 0; z-index: 100;
+            display: none;
+            align-items: center; justify-content: center;
+            background: rgba(8, 2, 4, .94);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        #lightbox.open { display: flex; }
+        #lightbox img {
+            max-width: 94vw; max-height: 86vh;
+            border-radius: 14px;
+            box-shadow: 0 25px 70px rgba(239, 68, 68, .3);
+            animation: lbIn .35s ease;
+        }
+        @keyframes lbIn { from { opacity: 0; transform: scale(.96); } to { opacity: 1; transform: none; } }
+        .lb-btn {
+            position: absolute;
+            background: rgba(26, 5, 8, .7);
+            border: 1px solid rgba(239, 68, 68, .4);
+            color: #fecdd3;
+            width: 46px; height: 46px;
+            border-radius: 9999px;
+            font-size: 20px; line-height: 1;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            transition: transform .2s ease, background .2s ease;
+            user-select: none;
+        }
+        .lb-btn:hover { background: rgba(239, 68, 68, .3); transform: scale(1.08); }
+        #lb-close { top: 18px; right: 18px; }
+        #lb-prev { left: 14px; top: 50%; transform: translateY(-50%); }
+        #lb-next { right: 14px; top: 50%; transform: translateY(-50%); }
+        #lb-prev:hover, #lb-next:hover { transform: translateY(-50%) scale(1.08); }
+        #lb-count {
+            position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
+            font-family: 'Caveat', cursive; font-size: 20px; color: #fda4af;
+        }
+
+        /* ===== Мягкое появление блоков при прокрутке ===== */
+        .reveal { opacity: 0; transform: translateY(20px); transition: opacity .8s ease, transform .8s ease; }
+        .reveal.in { opacity: 1; transform: none; }
+
+        /* ===== Фактура фона: мягкое сияние, виньетка, лёгкое зерно ===== */
+        body::before {
+            content: "";
+            position: fixed; inset: 0; z-index: 0; pointer-events: none;
+            background:
+                radial-gradient(60% 45% at 15% 8%, rgba(244, 63, 94, .13), transparent 70%),
+                radial-gradient(50% 40% at 85% 25%, rgba(190, 18, 60, .12), transparent 70%),
+                radial-gradient(70% 50% at 50% 105%, rgba(239, 68, 68, .10), transparent 70%);
+        }
+        body::after {
+            content: "";
+            position: fixed; inset: 0; z-index: 1; pointer-events: none;
+            box-shadow: inset 0 0 220px 60px rgba(10, 2, 4, .85);
+            opacity: .9;
+        }
+        .grain {
+            position: fixed; inset: -50%; z-index: 2; pointer-events: none;
+            opacity: .035;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+            animation: grainShift 8s steps(6) infinite;
+        }
+        @keyframes grainShift {
+            0%   { transform: translate(0, 0); }
+            100% { transform: translate(-6%, 4%); }
+        }
+
+        /* ===== Полоска прогресса чтения ===== */
+        #progress {
+            position: fixed; top: 0; left: 0; height: 2px; width: 0%;
+            z-index: 60;
+            background: linear-gradient(90deg, #be123c, #f43f5e, #fda4af);
+            box-shadow: 0 0 12px rgba(244, 63, 94, .8);
+            transition: width .12s linear;
+        }
+
+        /* ===== Липкая навигация (появляется после главного экрана) ===== */
+        #topnav {
+            position: fixed; top: 10px; left: 50%;
+            transform: translate(-50%, -140%);
+            z-index: 55;
+            display: flex; align-items: center; gap: 4px;
+            padding: 6px;
+            background: rgba(26, 5, 8, .72);
+            backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(239, 68, 68, .28);
+            border-radius: 9999px;
+            box-shadow: 0 10px 34px rgba(0, 0, 0, .5);
+            transition: transform .45s cubic-bezier(.2, .8, .2, 1), opacity .45s ease;
+            opacity: 0;
+            max-width: 94vw;
+        }
+        #topnav.show { transform: translate(-50%, 0); opacity: 1; }
+        #topnav a {
+            font-size: 12px; letter-spacing: .04em;
+            color: #fecdd3;
+            padding: 8px 14px;
+            border-radius: 9999px;
+            white-space: nowrap;
+            transition: background .25s ease, color .25s ease;
+        }
+        #topnav a:hover { background: rgba(244, 63, 94, .18); }
+        #topnav a.active { background: linear-gradient(135deg, #ef4444, #be123c); color: #fff; }
+        @media (max-width: 420px) {
+            #topnav a { font-size: 11px; padding: 7px 10px; }
+        }
+
+        /* ===== Заголовки разделов: тонкий орнамент вместо простой черты ===== */
+        .ornament {
+            display: flex; align-items: center; justify-content: center;
+            gap: 10px; margin-top: 10px;
+        }
+        .ornament span { color: #f43f5e; font-size: 12px; filter: drop-shadow(0 0 6px rgba(244, 63, 94, .8)); }
+        .ornament i {
+            display: block; height: 1px; width: 54px;
+            background: linear-gradient(90deg, transparent, rgba(244, 63, 94, .8));
+        }
+        .ornament i + i { background: linear-gradient(90deg, rgba(244, 63, 94, .8), transparent); }
+
+        /* ===== Крупная «главная» плитка в сетке — для иерархии ===== */
+        .photo-cell.feature {
+            grid-column: span 2;
+            grid-row: span 2;
+            aspect-ratio: auto;
+        }
+        /* Блик, пробегающий по плитке при наведении */
+        .photo-cell::before {
+            content: "";
+            position: absolute; top: 0; left: -60%;
+            width: 45%; height: 100%;
+            z-index: 2;
+            background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .16), transparent);
+            transform: skewX(-18deg);
+            transition: left .75s cubic-bezier(.2, .7, .2, 1);
+            pointer-events: none;
+        }
+        .photo-cell:hover::before { left: 120%; }
+
+        /* ===== Кнопка «наверх» (слева, чтобы не спорить с плеером) ===== */
+        #to-top {
+            position: fixed; bottom: 20px; left: 20px; z-index: 50;
+            width: 44px; height: 44px; border-radius: 9999px;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(26, 5, 8, .75);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(239, 68, 68, .35);
+            color: #fecdd3; cursor: pointer;
+            opacity: 0; transform: translateY(12px); pointer-events: none;
+            transition: opacity .35s ease, transform .35s ease, background .25s ease;
+        }
+        #to-top.show { opacity: 1; transform: none; pointer-events: auto; }
+        #to-top:hover { background: rgba(244, 63, 94, .3); }
+
+        /* ===== Полоса прокрутки в тон ===== */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #140407; }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(#be123c, #7f1d1d);
+            border-radius: 9999px;
+            border: 2px solid #140407;
+        }
+        ::-webkit-scrollbar-thumb:hover { background: linear-gradient(#f43f5e, #be123c); }
+
+        /* Контент выше фоновых слоёв.
+           ВАЖНО: сюда нельзя добавлять #music-player / #topnav / #to-top / #lightbox —
+           у них position: fixed, и relative его сбивает (плеер расползался полосой). */
+        section, footer { position: relative; z-index: 10; }
     </style>
 </head>
 <body class="text-rose-100 antialiased selection:bg-rose-900 selection:text-rose-100 overflow-x-hidden">
+
+
+    <!-- Полоска прогресса, зерно, навигация -->
+    <div id="progress"></div>
+    <div class="grain"></div>
+    <nav id="topnav">
+        <a href="#gallery">История</a>
+        <a href="#more">Ещё моменты</a>
+        <a href="#sochi">Сочи</a>
+        <a href="#timer-section">Счётчик</a>
+    </nav>
+    <div id="to-top" role="button" aria-label="Наверх" title="Наверх">↑</div>
 
     <!-- Плавающий музыкальный плеер -->
     <audio id="bg-audio" src="music.mp3" loop preload="auto"></audio>
@@ -133,17 +362,12 @@
             <p class="text-rose-300/70 text-xs sm:text-base max-w-xs sm:max-w-md mx-auto leading-relaxed">
                 Маленький цифровой альбом воспоминаний, созданный для того, чтобы бережно хранить самые теплые улыбки, незабываемые дни и взгляды, в которых можно утонуть.
             </p>
-            <div class="pt-4 sm:pt-6">
-                <a href="#timer-section" class="inline-flex items-center gap-2 bg-rose-600 hover:bg-rose-500 text-white font-medium text-sm sm:text-base px-6 py-3 sm:px-8 sm:py-4 rounded-full transition-all duration-300 shadow-lg shadow-rose-600/20 hover:shadow-rose-600/40 transform hover:-translate-y-1 active:scale-95">
+            <div class="pt-4 sm:pt-6 flex justify-center">
+                <a href="#gallery" class="inline-flex items-center gap-2 bg-rose-600 hover:bg-rose-500 text-white font-medium text-sm sm:text-base px-8 py-3.5 sm:px-10 sm:py-4 rounded-full transition-all duration-300 shadow-lg shadow-rose-600/25 hover:shadow-rose-600/50 transform hover:-translate-y-1 active:scale-95">
                     <span>Открыть альбом</span>
                     <span>♥</span>
                 </a>
-                <a href="love-test.html" class="inline-flex items-center gap-2 mt-3 sm:mt-0 sm:ml-3 bg-transparent border border-rose-500/60 hover:bg-rose-500/15 text-rose-200 font-medium text-sm sm:text-base px-6 py-3 sm:px-8 sm:py-4 rounded-full transition-all duration-300 transform hover:-translate-y-1 active:scale-95">
-                    <span>Тест на любовь</span>
-                    <span>♥</span>
-                </a>
             </div>
-        </div>
         <div class="absolute bottom-6 sm:bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce text-rose-400 text-lg">
             ↓
         </div>
@@ -194,7 +418,7 @@
         <div class="text-center space-y-2 mb-12 sm:mb-20">
             <span class="handwritten text-rose-400 text-2xl sm:text-3xl font-bold">Листать воспоминания</span>
             <h2 class="serif-font text-3xl sm:text-5xl font-bold text-white">История в деталях</h2>
-            <div class="w-12 sm:w-16 h-1 bg-gradient-to-r from-transparent via-rose-500 to-transparent mx-auto rounded-full mt-2"></div>
+            <div class="ornament"><i></i><span>♥</span><i></i></div>
         </div>
 
         <!-- Сетка с карточками -->
@@ -379,6 +603,109 @@
         </div>
     </section>
 
+
+    <!-- Декоративный разделитель -->
+    <div class="w-full h-[1px] bg-gradient-to-r from-transparent via-rose-900/50 to-transparent my-2 relative z-10"></div>
+
+    <!-- Раздел: остальные наши фото (без подписей) -->
+    <section id="more" class="py-12 sm:py-20 max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+        <div class="text-center space-y-2 mb-8 sm:mb-12 reveal">
+            <span class="handwritten text-rose-400 text-2xl sm:text-3xl font-bold">Просто мы</span>
+            <h2 class="serif-font text-3xl sm:text-5xl font-bold text-white">Ещё наши моменты</h2>
+            <div class="ornament"><i></i><span>♥</span><i></i></div>
+            <p class="text-rose-300/60 text-xs sm:text-sm">весна 2026 • 6 кадров</p>
+        </div>
+        <div class="photo-grid reveal">
+                <div class="photo-cell feature" data-src="lodq.jpg">
+                    <img src="lodq.jpg" alt="29 марта" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" data-src="ergf.jpg">
+                    <img src="ergf.jpg" alt="8 апреля" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" data-src="cden.jpg">
+                    <img src="cden.jpg" alt="1 мая" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" data-src="keur.jpg">
+                    <img src="keur.jpg" alt="9 мая" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" data-src="you.jpg">
+                    <img src="you.jpg" alt="23 мая" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" data-src="love.jpg">
+                    <img src="love.jpg" alt="Поцелуев мост" loading="lazy" decoding="async">
+                </div>
+        </div>
+    </section>
+
+    <!-- Декоративный разделитель -->
+    <div class="w-full h-[1px] bg-gradient-to-r from-transparent via-rose-900/50 to-transparent my-2 relative z-10"></div>
+
+    <!-- Раздел: Сочи (порядок — по дате съёмки с вотермарки камеры) -->
+    <section id="sochi" class="py-12 sm:py-20 max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+        <div class="text-center space-y-2 mb-8 sm:mb-12 reveal">
+            <span class="handwritten text-rose-400 text-2xl sm:text-3xl font-bold">Море, горы и мы</span>
+            <h2 class="serif-font text-3xl sm:text-5xl font-bold text-white">Это мы в Сочи</h2>
+            <div class="ornament"><i></i><span>♥</span><i></i></div>
+            <p class="text-rose-300/60 text-xs sm:text-sm">27 июня — 10 июля 2026 • 18 кадров</p>
+        </div>
+        <div class="photo-grid reveal">
+                <div class="photo-cell feature" data-src="photo_2026-07-19_17-11-23.jpg">
+                    <img src="photo_2026-07-19_17-11-23.jpg" alt="27 июня, поезд" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" data-src="photo_2026-07-19_17-13-24.jpg">
+                    <img src="photo_2026-07-19_17-13-24.jpg" alt="29 июня, вокзал Сочи" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" data-src="photo_2026-07-19_17-13-56 (2).jpg">
+                    <img src="photo_2026-07-19_17-13-56 (2).jpg" alt="30 июня, пальмы" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" data-src="photo_2026-07-19_17-13-56.jpg">
+                    <img src="photo_2026-07-19_17-13-56.jpg" alt="30 июня" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" data-src="photo_2026-07-19_17-26-34.jpg">
+                    <img src="photo_2026-07-19_17-26-34.jpg" alt="30 июня, море вечером" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" data-src="photo_2026-07-19_17-26-36.jpg">
+                    <img src="photo_2026-07-19_17-26-36.jpg" alt="30 июня, вечер в цветах" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" data-src="photo_2026-07-19_17-26-39.jpg">
+                    <img src="photo_2026-07-19_17-26-39.jpg" alt="1 июля, обживаемся" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" data-src="photo_2026-07-03_12-40-33.jpg">
+                    <img src="photo_2026-07-03_12-40-33.jpg" alt="Агурские водопады" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" data-src="photo_2026-07-03_12-40-47.jpg">
+                    <img src="photo_2026-07-03_12-40-47.jpg" alt="Агурские водопады" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" data-src="photo_2026-07-19_17-53-19.jpg">
+                    <img src="photo_2026-07-19_17-53-19.jpg" alt="1 июля, Орлиные скалы" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" data-src="photo_2026-07-19_18-23-33.jpg">
+                    <img src="photo_2026-07-19_18-23-33.jpg" alt="1 июля, вечер в кафе" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" data-src="photo_2026-07-19_18-38-54.jpg">
+                    <img src="photo_2026-07-19_18-38-54.jpg" alt="4 июля, парк аттракционов" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" data-src="photo_2026-07-06_02-04-26.jpg">
+                    <img src="photo_2026-07-06_02-04-26.jpg" alt="Олимпийский парк" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" data-src="photo_2026-07-19_18-39-14.jpg">
+                    <img src="photo_2026-07-19_18-39-14.jpg" alt="5 июля" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" data-src="photo_2026-07-20_03-14-27.jpg">
+                    <img src="photo_2026-07-20_03-14-27.jpg" alt="8 июля, фонтан" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" data-src="photo_2026-07-22_21-39-11.jpg">
+                    <img src="photo_2026-07-22_21-39-11.jpg" alt="9 июля, горы" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" data-src="photo_2026-07-22_14-01-00.jpg">
+                    <img src="photo_2026-07-22_14-01-00.jpg" alt="9 июля" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" data-src="photo_2026-07-22_14-03-21.jpg">
+                    <img src="photo_2026-07-22_14-03-21.jpg" alt="10 июля, последний день" loading="lazy" decoding="async">
+                </div>
+        </div>
+    </section>
+
     <!-- Декоративный разделитель перед футером -->
     <div class="w-full h-[1px] bg-gradient-to-r from-transparent via-rose-900 to-transparent my-2 relative z-10"></div>
 
@@ -396,6 +723,16 @@
             </div>
         </div>
     </footer>
+
+
+    <!-- Просмотр фото во весь экран -->
+    <div id="lightbox" role="dialog" aria-label="Просмотр фото">
+        <div class="lb-btn" id="lb-close" role="button" aria-label="Закрыть">✕</div>
+        <div class="lb-btn" id="lb-prev" role="button" aria-label="Предыдущее фото">‹</div>
+        <div class="lb-btn" id="lb-next" role="button" aria-label="Следующее фото">›</div>
+        <img id="lb-img" src="" alt="">
+        <div id="lb-count"></div>
+    </div>
 
     <!-- JS Скрипт для живого таймера -->
     <script>
@@ -475,6 +812,100 @@
                 document.addEventListener('touchstart', startOnce, { once: false });
                 document.addEventListener('keydown', startOnce, { once: false });
             });
+        })();
+
+        // ===== Просмотр фото во весь экран =====
+        (function() {
+            // и новые фото из сеток, и старые полароид-карточки — открываются во весь экран
+            const cells = Array.from(document.querySelectorAll('.photo-cell, .polaroid'));
+            if (!cells.length) return;
+            const box = document.getElementById('lightbox');
+            const img = document.getElementById('lb-img');
+            const counter = document.getElementById('lb-count');
+            let idx = 0;
+
+            function show(i) {
+                idx = (i + cells.length) % cells.length;
+                const cell = cells[idx];
+                const inner = cell.querySelector('img');
+                img.src = cell.dataset.src || (inner ? inner.getAttribute('src') : '');
+                img.alt = inner ? (inner.alt || '') : '';
+                counter.textContent = (idx + 1) + ' / ' + cells.length;
+            }
+            function open(i) { show(i); box.classList.add('open'); document.body.style.overflow = 'hidden'; }
+            function close() { box.classList.remove('open'); document.body.style.overflow = ''; }
+
+            cells.forEach((c, i) => c.addEventListener('click', () => open(i)));
+            document.getElementById('lb-close').addEventListener('click', close);
+            document.getElementById('lb-prev').addEventListener('click', (e) => { e.stopPropagation(); show(idx - 1); });
+            document.getElementById('lb-next').addEventListener('click', (e) => { e.stopPropagation(); show(idx + 1); });
+            box.addEventListener('click', (e) => { if (e.target === box || e.target === img) close(); });
+            document.addEventListener('keydown', (e) => {
+                if (!box.classList.contains('open')) return;
+                if (e.key === 'Escape') close();
+                if (e.key === 'ArrowLeft') show(idx - 1);
+                if (e.key === 'ArrowRight') show(idx + 1);
+            });
+            // свайпы на телефоне
+            let x0 = null;
+            box.addEventListener('touchstart', (e) => { x0 = e.touches[0].clientX; }, { passive: true });
+            box.addEventListener('touchend', (e) => {
+                if (x0 === null) return;
+                const dx = e.changedTouches[0].clientX - x0;
+                if (Math.abs(dx) > 45) show(idx + (dx < 0 ? 1 : -1));
+                x0 = null;
+            }, { passive: true });
+        })();
+
+        // ===== Мягкое появление блоков при прокрутке =====
+        (function() {
+            const items = document.querySelectorAll('.reveal');
+            if (!items.length) return;
+            if (!('IntersectionObserver' in window)) {
+                items.forEach(el => el.classList.add('in'));
+                return;
+            }
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach(en => {
+                    if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+                });
+            }, { rootMargin: '0px 0px -10% 0px', threshold: 0.05 });
+            items.forEach(el => io.observe(el));
+        })();
+
+        // ===== Прогресс чтения, навигация, кнопка «наверх» =====
+        (function() {
+            const bar = document.getElementById('progress');
+            const nav = document.getElementById('topnav');
+            const toTop = document.getElementById('to-top');
+            const links = Array.from(nav.querySelectorAll('a'));
+            const sections = links
+                .map(a => document.querySelector(a.getAttribute('href')))
+                .filter(Boolean);
+
+            function onScroll() {
+                const h = document.documentElement;
+                const max = h.scrollHeight - h.clientHeight;
+                const y = h.scrollTop || document.body.scrollTop;
+                bar.style.width = (max > 0 ? (y / max) * 100 : 0) + '%';
+
+                const past = y > window.innerHeight * 0.75;
+                nav.classList.toggle('show', past);
+                toTop.classList.toggle('show', past);
+
+                // активный раздел — тот, что ближе к верху экрана
+                let best = -1, bestDist = Infinity;
+                sections.forEach((s, i) => {
+                    const d = Math.abs(s.getBoundingClientRect().top - 90);
+                    if (d < bestDist) { bestDist = d; best = i; }
+                });
+                links.forEach((a, i) => a.classList.toggle('active', i === best));
+            }
+
+            toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+            window.addEventListener('scroll', onScroll, { passive: true });
+            window.addEventListener('resize', onScroll);
+            onScroll();
         })();
     </script>
 </body>
