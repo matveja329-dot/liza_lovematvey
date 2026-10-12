@@ -23,14 +23,14 @@
         /* Стиль под винтажную полароид-карточку */
         .polaroid {
             background: #ffffff;
-            padding: 12px 12px 20px 12px;
+            padding: 12px;
             box-shadow: 0 8px 25px rgba(239, 68, 68, 0.12);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             -webkit-tap-highlight-color: transparent;
         }
         @media (min-width: 640px) {
             .polaroid {
-                padding: 16px 16px 24px 16px;
+                padding: 16px;
                 box-shadow: 0 10px 30px rgba(239, 68, 68, 0.15);
             }
         }
@@ -253,7 +253,9 @@
         }
         #topnav a:hover { background: rgba(244, 63, 94, .18); }
         #topnav a.active { background: linear-gradient(135deg, #ef4444, #be123c); color: #fff; }
-        @media (max-width: 420px) {
+        #topnav { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+        #topnav::-webkit-scrollbar { display: none; }
+        @media (max-width: 560px) {
             #topnav a { font-size: 11px; padding: 7px 10px; }
         }
 
@@ -313,6 +315,311 @@
         }
         ::-webkit-scrollbar-thumb:hover { background: linear-gradient(#f43f5e, #be123c); }
 
+
+        /* ===== Дни рождения ===== */
+        .bd-card {
+            background: rgba(20, 5, 8, .55);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(239, 68, 68, .22);
+            border-radius: 26px;
+            padding: 22px 18px 24px;
+            text-align: center;
+            box-shadow: 0 14px 40px rgba(0, 0, 0, .45);
+            transition: border-color .35s ease, box-shadow .35s ease, transform .35s ease;
+        }
+        .bd-card:hover {
+            border-color: rgba(244, 63, 94, .5);
+            box-shadow: 0 18px 50px rgba(239, 68, 68, .22);
+            transform: translateY(-3px);
+        }
+        .bd-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 8px; margin-top: 16px;
+        }
+        .bd-cell {
+            background: rgba(0, 0, 0, .32);
+            border: 1px solid rgba(239, 68, 68, .14);
+            border-radius: 16px;
+            padding: 10px 4px 9px;
+        }
+        .bd-num {
+            display: block; font-weight: 700;
+            font-size: 22px; line-height: 1;
+            color: #f43f5e; text-shadow: 0 0 14px rgba(239, 68, 68, .55);
+            font-variant-numeric: tabular-nums;
+        }
+        .bd-lbl {
+            display: block; margin-top: 5px;
+            font-size: 9px; letter-spacing: .12em; text-transform: uppercase;
+            color: rgba(254, 205, 211, .5); font-weight: 600;
+        }
+        .bd-note {
+            display: block; margin-top: 14px;
+            font-size: 10px; letter-spacing: .16em; text-transform: uppercase;
+            color: rgba(253, 164, 175, .6); font-weight: 600;
+        }
+        .bd-card.is-today { border-color: rgba(244, 63, 94, .75); }
+        .bd-card.is-today .bd-num { color: #fb7185; }
+        .bd-card.is-today .bd-note { color: #fda4af; }
+        @media (min-width: 640px) {
+            .bd-card { padding: 28px 24px 30px; }
+            .bd-num { font-size: 30px; }
+        }
+
+        /* ===== Видео ===== */
+        .video-frame {
+            position: relative;
+            width: 100%;
+            max-width: 420px;
+            margin: 0 auto;
+            border-radius: 26px;
+            overflow: hidden;
+            border: 1px solid rgba(239, 68, 68, .22);
+            background: #241014;
+            box-shadow: 0 18px 55px rgba(0, 0, 0, .55), 0 0 34px rgba(239, 68, 68, .12);
+        }
+        .video-frame video {
+            display: block;
+            width: 100%;
+            height: auto;
+            background: #000;
+        }
+        .video-frame::after {
+            content: ""; position: absolute; inset: 0; pointer-events: none;
+            box-shadow: inset 0 -70px 90px -40px rgba(10, 2, 4, .75);
+        }
+
+
+        /* ===== Праздничное оформление ===== */
+        .bd-festive { overflow: hidden; }
+        .bd-kicker {
+            font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
+            color: rgba(253, 164, 175, .75); font-weight: 700; margin-top: 14px;
+        }
+        .bd-name {
+            font-family: 'Playfair Display', serif; font-weight: 700;
+            text-transform: uppercase; letter-spacing: .08em;
+            font-size: 26px; line-height: 1.1; margin-top: 4px;
+            background: linear-gradient(100deg, #f43f5e 15%, #fecdd3 40%, #fff 50%, #fecdd3 60%, #f43f5e 85%);
+            background-size: 220% 100%;
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            animation: bdShine 6s linear infinite;
+        }
+        @keyframes bdShine { to { background-position: -220% 0; } }
+        .bd-cake {
+            width: 62px; height: 62px; margin: 0 auto;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 30px; border-radius: 9999px;
+            background: radial-gradient(circle at 50% 35%, rgba(244, 63, 94, .35), rgba(26, 5, 8, .85) 70%);
+            border: 1px solid rgba(244, 63, 94, .45);
+            box-shadow: 0 0 26px rgba(239, 68, 68, .45), inset 0 0 18px rgba(239, 68, 68, .25);
+            animation: bdFloat 3.6s ease-in-out infinite;
+        }
+        @keyframes bdFloat {
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50% { transform: translateY(-7px) rotate(2deg); }
+        }
+        .bd-badge {
+            display: inline-block; margin-top: 12px;
+            font-size: 10px; letter-spacing: .16em; text-transform: uppercase; font-weight: 700;
+            color: #fff; padding: 6px 14px; border-radius: 9999px;
+            background: linear-gradient(135deg, #ef4444, #be123c);
+            box-shadow: 0 0 20px rgba(239, 68, 68, .55);
+            animation: bdPulse 2s ease-in-out infinite;
+        }
+        .bd-badge[hidden] { display: none; }
+        @keyframes bdPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.06); }
+        }
+        .bd-card.is-today .bd-name { animation-duration: 2.2s; }
+
+        /* конфетти */
+        .bd-confetti { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 1; }
+        .bd-confetti i {
+            position: absolute; top: -24px; display: block;
+            width: 7px; height: 13px; border-radius: 2px; opacity: .8;
+            animation: bdFall linear infinite;
+        }
+        @keyframes bdFall {
+            0%   { transform: translate3d(0, -20px, 0) rotate(0deg); opacity: 0; }
+            10%  { opacity: .85; }
+            100% { transform: translate3d(26px, 760px, 0) rotate(720deg); opacity: 0; }
+        }
+        .bd-card, .bd-festive > div:not(.bd-confetti) { position: relative; z-index: 2; }
+
+        /* ♥ в орнаментах пульсирует, заголовок первого экрана переливается */
+        .ornament span { animation: bdBeat 2.4s ease-in-out infinite; }
+        @keyframes bdBeat {
+            0%, 100% { transform: scale(1); }
+            30% { transform: scale(1.28); }
+        }
+        .shimmer {
+            background: linear-gradient(100deg, #f43f5e 15%, #fecdd3 42%, #fff 50%, #fecdd3 58%, #f43f5e 85%);
+            background-size: 220% 100%;
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            animation: bdShine 7s linear infinite;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .bd-confetti, .bd-cake, .bd-badge, .bd-name, .shimmer, .ornament span { animation: none; }
+        }
+
+
+        /* ===== Красота: первый экран с живым фото ===== */
+        .hero-photo { position: absolute; inset: 0; z-index: 0; overflow: hidden; opacity: .46; }
+        .hero-photo img {
+            width: 100%; height: 100%; object-fit: cover;
+            filter: blur(1px) saturate(.9) contrast(1.04);
+            transform-origin: 62% 38%;
+            animation: heroZoom 28s ease-in-out infinite alternate;
+        }
+        .hero-photo::after {
+            content: ""; position: absolute; inset: 0;
+            background:
+                radial-gradient(68% 58% at 50% 42%, rgba(26, 5, 8, .34), rgba(26, 5, 8, .9) 78%),
+                linear-gradient(to bottom, rgba(26, 5, 8, .55), rgba(26, 5, 8, .96));
+        }
+        @keyframes heroZoom {
+            from { transform: scale(1.06); }
+            to   { transform: scale(1.24) translate(-2.5%, 1.5%); }
+        }
+
+        /* ===== Мозаика в сетках ===== */
+        .photo-grid { grid-auto-flow: row dense; }
+        .photo-cell.w2 { grid-column: span 2; aspect-ratio: 3 / 2; }
+        .photo-cell.h2 { grid-row: span 2; aspect-ratio: auto; min-height: 420px; }
+        @media (max-width: 639px) {
+            .photo-cell.h2 { min-height: 300px; }
+        }
+
+        /* ===== Каскадное появление плиток ===== */
+        .photo-grid.in .photo-cell { animation: cellUp .62s cubic-bezier(.2, .7, .2, 1) backwards; animation-delay: calc(var(--i, 0) * 45ms); }
+        @keyframes cellUp {
+            from { opacity: 0; transform: translateY(18px) scale(.975); }
+        }
+
+        /* ===== Полароиды: тёплая бумага, разный наклон ===== */
+        .polaroid {
+            background: linear-gradient(180deg, #fbf6ec, #efe4d3);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, .5), 0 2px 0 rgba(255, 255, 255, .35) inset;
+        }
+        #gallery .grid > div:nth-child(3n + 1) .polaroid { transform: rotate(-1.7deg); }
+        #gallery .grid > div:nth-child(3n + 2) .polaroid { transform: rotate(1.3deg); }
+        #gallery .grid > div:nth-child(3n) .polaroid { transform: rotate(-.5deg); }
+        #gallery .polaroid:hover { transform: rotate(0deg) scale(1.03); box-shadow: 0 22px 48px rgba(239, 68, 68, .28); }
+
+        /* ===== Золотой акцент вместо чисто розового ===== */
+        .bd-kicker { color: #f2cf9e; }
+        .bd-card .serif-font { color: #f7e2c4; letter-spacing: .2em; }
+        .ornament i { background: linear-gradient(90deg, transparent, rgba(242, 207, 158, .75)); }
+        .ornament i + i { background: linear-gradient(90deg, rgba(242, 207, 158, .75), transparent); }
+        #timer-section p:last-child { color: rgba(242, 207, 158, .62); }
+
+        /* ===== Декоративный разделитель вместо линии ===== */
+        .rule {
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            margin: 6px auto; max-width: 620px; position: relative; z-index: 10;
+        }
+        .rule::before, .rule::after {
+            content: ""; height: 1px; flex: 1;
+            background: linear-gradient(90deg, transparent, rgba(190, 18, 60, .55));
+        }
+        .rule::after { background: linear-gradient(90deg, rgba(190, 18, 60, .55), transparent); }
+        .rule span {
+            color: #f43f5e; font-size: 11px; line-height: 1;
+            filter: drop-shadow(0 0 7px rgba(244, 63, 94, .85));
+        }
+
+        /* ===== Фотополоса в футере ===== */
+        .foot-strip { display: flex; justify-content: center; gap: 10px; margin-top: 26px; }
+        .foot-strip img {
+            width: 74px; height: 96px; object-fit: cover; border-radius: 10px;
+            border: 1px solid rgba(242, 207, 158, .28);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, .5);
+            padding: 4px 4px 10px; background: linear-gradient(180deg, #fbf6ec, #e8dcc9);
+            transition: transform .4s cubic-bezier(.2, .7, .2, 1);
+        }
+        .foot-strip img:nth-child(1) { transform: rotate(-5deg); }
+        .foot-strip img:nth-child(2) { transform: rotate(2deg) translateY(-4px); }
+        .foot-strip img:nth-child(3) { transform: rotate(6deg); }
+        .foot-strip img:hover { transform: rotate(0deg) scale(1.09); }
+
+        /* якоря не должны прятаться под плавающей навигацией */
+        section[id] { scroll-margin-top: 78px; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .hero-photo img, .photo-grid.in .photo-cell { animation: none; }
+        }
+
+
+        /* ===== Фотоплёнка ===== */
+        .film-strip {
+            position: relative;
+            background: #0d0508;
+            border-radius: 8px;
+            border: 1px solid rgba(250, 240, 235, .07);
+            box-shadow: 0 22px 50px rgba(0, 0, 0, .6), inset 0 0 60px rgba(0, 0, 0, .7);
+            transform: rotate(-.5deg);
+        }
+        .film-strip.reveal.in { transform: rotate(-.5deg); }
+        .film-perf {
+            height: 15px;
+            background-image: repeating-linear-gradient(90deg,
+                transparent 0 9px, rgba(250, 240, 235, .17) 9px 21px, transparent 21px 30px);
+        }
+        .film-track {
+            display: flex; gap: 13px; padding: 4px 14px;
+            overflow-x: auto; scroll-snap-type: x proximity;
+            scrollbar-width: none; cursor: grab;
+        }
+        .film-track::-webkit-scrollbar { display: none; }
+        .film-track.dragging { cursor: grabbing; scroll-snap-type: none; }
+        .film-frame {
+            position: relative; flex: 0 0 auto;
+            width: 168px; height: 222px;
+            border-radius: 3px; overflow: hidden;
+            background: #07030a;
+            scroll-snap-align: center;
+            cursor: zoom-in;
+            filter: saturate(.9) contrast(1.03) brightness(.94);
+            transition: transform .38s cubic-bezier(.2, .7, .2, 1), filter .38s ease, box-shadow .38s ease;
+            box-shadow: 0 0 0 1px rgba(250, 240, 235, .08);
+            animation: filmIn .6s cubic-bezier(.2, .7, .2, 1) backwards;
+            animation-delay: calc(var(--i, 0) * 55ms);
+        }
+        .film-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .film-frame:hover {
+            transform: translateY(-5px) scale(1.035);
+            filter: none;
+            box-shadow: 0 0 0 1px rgba(244, 63, 94, .5), 0 16px 34px rgba(239, 68, 68, .28);
+            z-index: 4;
+        }
+        .film-frame .fnum {
+            position: absolute; left: 5px; bottom: 4px; z-index: 2;
+            font-size: 8px; letter-spacing: .12em; font-weight: 700;
+            color: rgba(250, 240, 235, .55);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, .9);
+        }
+        @keyframes filmIn { from { opacity: 0; transform: translateY(14px) scale(.96); } }
+        .film-glare {
+            position: absolute; inset: 0; z-index: 3; pointer-events: none; border-radius: 8px;
+            background: linear-gradient(100deg, transparent 34%, rgba(255, 255, 255, .075) 48%, transparent 62%);
+            background-size: 260% 100%;
+            animation: filmGlare 9s linear infinite;
+        }
+        @keyframes filmGlare { to { background-position: -260% 0; } }
+        .film-hint {
+            margin-top: 14px; text-align: center;
+            font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
+            color: rgba(242, 207, 158, .55); font-weight: 700;
+        }
+        @media (max-width: 480px) {
+            .film-frame { width: 132px; height: 176px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .film-glare, .film-frame { animation: none; }
+        }
+
         /* Контент выше фоновых слоёв.
            ВАЖНО: сюда нельзя добавлять #music-player / #topnav / #to-top / #lightbox —
            у них position: fixed, и relative его сбивает (плеер расползался полосой). */
@@ -326,10 +633,14 @@
     <div id="progress"></div>
     <div class="grain"></div>
     <nav id="topnav">
-        <a href="#gallery">История</a>
-        <a href="#more">Ещё моменты</a>
-        <a href="#sochi">Сочи</a>
         <a href="#timer-section">Счётчик</a>
+        <a href="#birthdays">Даты</a>
+        <a href="#gallery">История</a>
+        <a href="#film">Плёнка</a>
+        <a href="#more">Ещё</a>
+        <a href="#sochi">Сочи</a>
+        <a href="#autumn">Новые</a>
+        <a href="#video">Видео</a>
     </nav>
     <div id="to-top" role="button" aria-label="Наверх" title="Наверх">↑</div>
 
@@ -351,13 +662,14 @@
 
     <!-- Главный экран -->
     <section class="min-h-screen flex flex-col justify-center items-center px-4 sm:px-6 relative z-10 text-center">
+        <div class="hero-photo" aria-hidden="true"><img src="oafdci.jpg" alt=""></div>
         <!-- Красивый фоновый градиент-свечение -->
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 sm:w-[500px] sm:h-[500px] bg-red-600/10 rounded-full blur-[100px] sm:blur-[120px] pointer-events-none"></div>
 
         <div class="space-y-4 sm:space-y-6 max-w-2xl relative z-10">
             <span class="handwritten text-rose-400 text-3xl sm:text-5xl font-bold block">Самое дорогое сердцу...</span>
             <h1 class="serif-font text-4xl sm:text-7xl font-bold tracking-tight text-white leading-tight">
-                Наши особенные <br><span class="italic text-rose-500 text-glow">моменты</span>
+                Наши особенные <br><span class="italic shimmer">моменты</span>
             </h1>
             <p class="text-rose-300/70 text-xs sm:text-base max-w-xs sm:max-w-md mx-auto leading-relaxed">
                 Маленький цифровой альбом воспоминаний, созданный для того, чтобы бережно хранить самые теплые улыбки, незабываемые дни и взгляды, в которых можно утонуть.
@@ -368,13 +680,14 @@
                     <span>♥</span>
                 </a>
             </div>
+        </div>
         <div class="absolute bottom-6 sm:bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce text-rose-400 text-lg">
             ↓
         </div>
     </section>
 
     <!-- Декоративный разделитель -->
-    <div class="w-full h-[1px] bg-gradient-to-r from-transparent via-rose-900/50 to-transparent my-2 relative z-10"></div>
+    <div class="rule" aria-hidden="true"><span>♥</span></div>
 
     <!-- Раздел: Счётчик любви (Live секундомер) -->
     <section id="timer-section" class="py-12 sm:py-16 px-4 relative z-10">
@@ -411,7 +724,52 @@
     </section>
 
     <!-- Декоративный разделитель -->
-    <div class="w-full h-[1px] bg-gradient-to-r from-transparent via-rose-900/50 to-transparent my-2 relative z-10"></div>
+    <div class="rule" aria-hidden="true"><span>♥</span></div>
+
+    <!-- Раздел: Дни рождения -->
+    <section id="birthdays" class="bd-festive py-12 sm:py-20 px-4 relative z-10">
+        <div class="bd-confetti" aria-hidden="true"></div>
+        <div class="max-w-3xl mx-auto">
+            <div class="text-center space-y-2 mb-10 sm:mb-14 reveal">
+                <span class="handwritten text-rose-400 text-2xl sm:text-3xl font-bold">Даты, которые ждём</span>
+                <h2 class="serif-font text-3xl sm:text-5xl font-bold text-white">Дни рождения</h2>
+                <div class="ornament"><i></i><span>♥</span><i></i></div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-8">
+                <div class="bd-card reveal" data-mmdd="10-14">
+                    <div class="bd-cake"><span aria-hidden="true">🎂</span></div>
+                    <p class="bd-kicker">День рождения</p>
+                    <p class="bd-name">Лизы</p>
+                    <p class="serif-font text-rose-200/70 text-xs sm:text-sm tracking-[.18em] uppercase">14 октября</p>
+<div class="bd-grid">
+                        <div class="bd-cell"><span class="bd-num" data-unit="days">–</span><span class="bd-lbl">дней</span></div>
+                        <div class="bd-cell"><span class="bd-num" data-unit="hours">–</span><span class="bd-lbl">часов</span></div>
+                        <div class="bd-cell"><span class="bd-num" data-unit="minutes">–</span><span class="bd-lbl">минут</span></div>
+                        <div class="bd-cell"><span class="bd-num" data-unit="seconds">–</span><span class="bd-lbl">секунд</span></div>
+                    </div>
+                    <span class="bd-note">осталось до праздника</span>
+                    <span class="bd-badge" hidden>уже совсем скоро ♥</span>
+                </div>
+                <div class="bd-card reveal" data-mmdd="05-16">
+                    <div class="bd-cake"><span aria-hidden="true">🎂</span></div>
+                    <p class="bd-kicker">День рождения</p>
+                    <p class="bd-name">Матвея</p>
+                    <p class="serif-font text-rose-200/70 text-xs sm:text-sm tracking-[.18em] uppercase">16 мая</p>
+<div class="bd-grid">
+                        <div class="bd-cell"><span class="bd-num" data-unit="days">–</span><span class="bd-lbl">дней</span></div>
+                        <div class="bd-cell"><span class="bd-num" data-unit="hours">–</span><span class="bd-lbl">часов</span></div>
+                        <div class="bd-cell"><span class="bd-num" data-unit="minutes">–</span><span class="bd-lbl">минут</span></div>
+                        <div class="bd-cell"><span class="bd-num" data-unit="seconds">–</span><span class="bd-lbl">секунд</span></div>
+                    </div>
+                    <span class="bd-note">осталось до праздника</span>
+                    <span class="bd-badge" hidden>уже совсем скоро ♥</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Декоративный разделитель -->
+    <div class="rule" aria-hidden="true"><span>♥</span></div>
 
     <!-- Галерея моментов (Полароид-стиль) -->
     <section id="gallery" class="py-12 sm:py-24 max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
@@ -426,176 +784,90 @@
             
             <!-- Карточка 1: Лежание на пуфах (relax.jpg) -->
             <div class="flex flex-col items-center">
-                <div class="polaroid transform -rotate-1 w-full max-w-[21rem] sm:max-w-sm rounded-lg">
-                    <div class="w-full h-64 sm:h-80 bg-stone-900 overflow-hidden rounded-md mb-3 sm:mb-4 shadow-inner">
+                <div class="polaroid transform -rotate-1 w-full max-w-[21rem] sm:max-w-sm rounded-lg" data-src="relax.jpg">
+                    <div class="w-full h-64 sm:h-80 bg-stone-900 overflow-hidden rounded-md shadow-inner">
                         <img src="relax.jpg" alt="Момент беззаботности" class="w-full h-full object-cover">
-                    </div>
-                    <div class="text-center space-y-1 text-stone-800">
-                        <p class="handwritten text-rose-600 text-2xl sm:text-3xl font-bold">Момент беззаботности</p>
-                        <p class="text-stone-400 text-[10px] sm:text-xs font-semibold uppercase tracking-widest">Май • Чиллим</p>
-                        <p class="text-stone-600 text-[11px] sm:text-sm pt-1.5 sm:pt-2 leading-relaxed font-medium">
-                            Тот самый теплый день. Время замерло на пуфах среди зеленой травы. Небо над нами и бесконечное спокойствие в каждом вздохе.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Карточка 2: Питерский вид (view.jpg) -->
-            <div class="flex flex-col items-center">
-                <div class="polaroid transform rotate-1 w-full max-w-[21rem] sm:max-w-sm rounded-lg">
-                    <div class="w-full h-64 sm:h-80 bg-stone-900 overflow-hidden rounded-md mb-3 sm:mb-4 shadow-inner">
-                        <img src="view.jpg" alt="Город у твоих ног" class="w-full h-full object-cover">
-                    </div>
-                    <div class="text-center space-y-1 text-stone-800">
-                        <p class="handwritten text-rose-600 text-2xl sm:text-3xl font-bold">Город у твоих ног</p>
-                        <p class="text-stone-400 text-[10px] sm:text-xs font-semibold uppercase tracking-widest">Питер • Высота</p>
-                        <p class="text-stone-600 text-[11px] sm:text-sm pt-1.5 sm:pt-2 leading-relaxed font-medium">
-                            Питерские крыши и бескрайнее небо. Ловим теплые лучи солнца и смотрим на город с высоты, где нет лишней суеты.
-                        </p>
                     </div>
                 </div>
             </div>
 
             <!-- Карточка 3: Карбонара (pasta.jpg) -->
             <div class="flex flex-col items-center">
-                <div class="polaroid transform -rotate-1 w-full max-w-[21rem] sm:max-w-sm rounded-lg">
-                    <div class="w-full h-64 sm:h-80 bg-stone-900 overflow-hidden rounded-md mb-3 sm:mb-4 shadow-inner">
+                <div class="polaroid transform -rotate-1 w-full max-w-[21rem] sm:max-w-sm rounded-lg" data-src="pasta.jpg">
+                    <div class="w-full h-64 sm:h-80 bg-stone-900 overflow-hidden rounded-md shadow-inner">
                         <img src="pasta.jpg" alt="Тот самый вечер" class="w-full h-full object-cover">
-                    </div>
-                    <div class="text-center space-y-1 text-stone-800">
-                        <p class="handwritten text-rose-600 text-2xl sm:text-3xl font-bold">Самый вкусный ужин</p>
-                        <p class="text-stone-400 text-[10px] sm:text-xs font-semibold uppercase tracking-widest">Ресторан • Карбонара</p>
-                        <p class="text-stone-600 text-[11px] sm:text-sm pt-1.5 sm:pt-2 leading-relaxed font-medium">
-                            Уютные огни любимого места, твоя долгожданная паста Карбонара и этот родной взгляд, который делает любой вечер идеальным.
-                        </p>
                     </div>
                 </div>
             </div>
 
             <!-- Карточка 4: Сирень (is.jpg) -->
             <div class="flex flex-col items-center">
-                <div class="polaroid transform rotate-1 w-full max-w-[21rem] sm:max-w-sm rounded-lg">
-                    <div class="w-full h-64 sm:h-80 bg-stone-900 overflow-hidden rounded-md mb-3 sm:mb-4 shadow-inner">
+                <div class="polaroid transform rotate-1 w-full max-w-[21rem] sm:max-w-sm rounded-lg" data-src="is.jpg">
+                    <div class="w-full h-64 sm:h-80 bg-stone-900 overflow-hidden rounded-md shadow-inner">
                         <img src="is.jpg" alt="Цветы для тебя" class="w-full h-full object-cover">
-                    </div>
-                    <div class="text-center space-y-1 text-stone-800">
-                        <p class="handwritten text-rose-600 text-2xl sm:text-3xl font-bold">Это я тебе сирень подарил</p>
-                        <p class="text-stone-400 text-[10px] sm:text-xs font-semibold uppercase tracking-widest">Аромат весны • Цветы</p>
-                        <p class="text-stone-600 text-[11px] sm:text-sm pt-1.5 sm:pt-2 leading-relaxed font-medium">
-                            Самой прекрасной и милой девочке — самые ароматные цветы. Твоя улыбка в этот момент была ярче любого питерского солнца!
-                        </p>
                     </div>
                 </div>
             </div>
 
             <!-- Карточка 5: Накрашенный Матвей (ice.jpg) -->
             <div class="flex flex-col items-center">
-                <div class="polaroid transform -rotate-1 w-full max-w-[21rem] sm:max-w-sm rounded-lg">
-                    <div class="w-full h-64 sm:h-80 bg-stone-900 overflow-hidden rounded-md mb-3 sm:mb-4 shadow-inner">
+                <div class="polaroid transform -rotate-1 w-full max-w-[21rem] sm:max-w-sm rounded-lg" data-src="ice.jpg">
+                    <div class="w-full h-64 sm:h-80 bg-stone-900 overflow-hidden rounded-md shadow-inner">
                         <img src="ice.jpg" alt="Бьюти-эксперименты" class="w-full h-full object-cover">
-                    </div>
-                    <div class="text-center space-y-1 text-stone-800">
-                        <p class="handwritten text-rose-600 text-2xl sm:text-3xl font-bold">Ты меня накрасила и радовалась</p>
-                        <p class="text-stone-400 text-[10px] sm:text-xs font-semibold uppercase tracking-widest">Салон красоты • Смех</p>
-                        <p class="text-stone-600 text-[11px] sm:text-sm pt-1.5 sm:pt-2 leading-relaxed font-medium">
-                            Твой личный манекен для макияжа. Готов терпеть любые стрелки на глазах, лишь бы слышать твой счастливый и громкий смех!
-                        </p>
                     </div>
                 </div>
             </div>
 
             <!-- Карточка 6: Псков памятник (xcq.jpg) -->
             <div class="flex flex-col items-center">
-                <div class="polaroid transform rotate-1 w-full max-w-[21rem] sm:max-w-sm rounded-lg">
-                    <div class="w-full h-64 sm:h-80 bg-stone-900 overflow-hidden rounded-md mb-3 sm:mb-4 shadow-inner">
+                <div class="polaroid transform rotate-1 w-full max-w-[21rem] sm:max-w-sm rounded-lg" data-src="xcq.jpg">
+                    <div class="w-full h-64 sm:h-80 bg-stone-900 overflow-hidden rounded-md shadow-inner">
                         <img src="xcq.jpg" alt="Поездка" class="w-full h-full object-cover">
-                    </div>
-                    <div class="text-center space-y-1 text-stone-800">
-                        <p class="handwritten text-rose-600 text-2xl sm:text-3xl font-bold">Это мы в Пскове</p>
-                        <p class="text-stone-400 text-[10px] sm:text-xs font-semibold uppercase tracking-widest">Путешествие • История</p>
-                        <p class="text-stone-600 text-[11px] sm:text-sm pt-1.5 sm:pt-2 leading-relaxed font-medium">
-                            Наша крутая вылазка в другой город. Мощные крепостные стены, километры шагов за руку и воспоминания, которые теперь навсегда с нами.
-                        </p>
                     </div>
                 </div>
             </div>
 
             <!-- Карточка 7: Полгода отношений / Розы (zxcvw.jpg) -->
             <div class="flex flex-col items-center">
-                <div class="polaroid transform -rotate-1 w-full max-w-[21rem] sm:max-w-sm rounded-lg">
-                    <div class="w-full h-64 sm:h-80 bg-stone-900 overflow-hidden rounded-md mb-3 sm:mb-4 shadow-inner">
+                <div class="polaroid transform -rotate-1 w-full max-w-[21rem] sm:max-w-sm rounded-lg" data-src="zxcvw.jpg">
+                    <div class="w-full h-64 sm:h-80 bg-stone-900 overflow-hidden rounded-md shadow-inner">
                         <img src="zxcvw.jpg" alt="Полгода отношений" class="w-full h-full object-cover">
-                    </div>
-                    <div class="text-center space-y-1 text-stone-800">
-                        <p class="handwritten text-rose-600 text-2xl sm:text-3xl font-bold">Это я на полгода отношений подарил самой сексуальной мадам</p>
-                        <p class="text-stone-400 text-[10px] sm:text-xs font-semibold uppercase tracking-widest">Важная дата • 6 месяцев</p>
-                        <p class="text-stone-600 text-[11px] sm:text-sm pt-1.5 sm:pt-2 leading-relaxed font-medium">
-                            Полгода счастья в одном кадре. Эти невероятные нежные розы — лишь малая часть того, что я чувствую к тебе каждый божий день.
-                        </p>
                     </div>
                 </div>
             </div>
 
             <!-- Карточка 8: Огромная Сакура (mat.jpg) -->
             <div class="flex flex-col items-center">
-                <div class="polaroid transform rotate-1 w-full max-w-[21rem] sm:max-w-sm rounded-lg">
-                    <div class="w-full h-64 sm:h-80 bg-stone-900 overflow-hidden rounded-md mb-3 sm:mb-4 shadow-inner">
+                <div class="polaroid transform rotate-1 w-full max-w-[21rem] sm:max-w-sm rounded-lg" data-src="mat.jpg">
+                    <div class="w-full h-64 sm:h-80 bg-stone-900 overflow-hidden rounded-md shadow-inner">
                         <img src="mat.jpg" alt="Цветущая весна" class="w-full h-full object-cover">
-                    </div>
-                    <div class="text-center space-y-1 text-stone-800">
-                        <p class="handwritten text-rose-600 text-2xl sm:text-3xl font-bold">Наше цветущее умиротворение</p>
-                        <p class="text-stone-400 text-[10px] sm:text-xs font-semibold uppercase tracking-widest">Сакура • Парные кепки</p>
-                        <p class="text-stone-600 text-[11px] sm:text-sm pt-1.5 sm:pt-2 leading-relaxed font-medium">
-                            Словно кадр из романтического аниме. Огромная розовая вишня, весенний ветер и мы, счастливые, укутанные в куртки и обнимающие друг друга.
-                        </p>
                     </div>
                 </div>
             </div>
 
             <!-- Карточка 9: Портрет Лизы (ss.jpg) -->
             <div class="flex flex-col items-center">
-                <div class="polaroid transform -rotate-1 w-full max-w-[21rem] sm:max-w-sm rounded-lg">
-                    <div class="w-full h-64 sm:h-80 bg-stone-900 overflow-hidden rounded-md mb-3 sm:mb-4 shadow-inner">
+                <div class="polaroid transform -rotate-1 w-full max-w-[21rem] sm:max-w-sm rounded-lg" data-src="ss.jpg">
+                    <div class="w-full h-64 sm:h-80 bg-stone-900 overflow-hidden rounded-md shadow-inner">
                         <img src="ss.jpg" alt="Твоя особенная улыбка" class="w-full h-full object-cover">
-                    </div>
-                    <div class="text-center space-y-1 text-stone-800">
-                        <p class="handwritten text-rose-600 text-2xl sm:text-3xl font-bold">Твоя особенная улыбка</p>
-                        <p class="text-stone-400 text-[10px] sm:text-xs font-semibold uppercase tracking-widest">Нежность • Твой взгляд</p>
-                        <p class="text-stone-600 text-[11px] sm:text-sm pt-1.5 sm:pt-2 leading-relaxed font-medium">
-                            Тот самый милый взгляд вниз, твоя фирменная ухмылка и этот невероятно теплый образ. Ты прекрасна в каждую микросекунду своей жизни.
-                        </p>
                     </div>
                 </div>
             </div>
 
             <!-- Карточка 10: Селфи в закате (sdf.jpg) -->
             <div class="flex flex-col items-center md:col-span-2 lg:col-span-1">
-                <div class="polaroid transform rotate-1 w-full max-w-[21rem] sm:max-w-sm mx-auto rounded-lg">
-                    <div class="w-full h-64 sm:h-80 bg-stone-900 overflow-hidden rounded-md mb-3 sm:mb-4 shadow-inner">
+                <div class="polaroid transform rotate-1 w-full max-w-[21rem] sm:max-w-sm mx-auto rounded-lg" data-src="sdf.jpg">
+                    <div class="w-full h-64 sm:h-80 bg-stone-900 overflow-hidden rounded-md shadow-inner">
                         <img src="sdf.jpg" alt="В лучах питерского заката" class="w-full h-full object-cover">
-                    </div>
-                    <div class="text-center space-y-1 text-stone-800">
-                        <p class="handwritten text-rose-600 text-2xl sm:text-3xl font-bold">В лучах питерского заката</p>
-                        <p class="text-stone-400 text-[10px] sm:text-xs font-semibold uppercase tracking-widest">Вечерний променад</p>
-                        <p class="text-stone-600 text-[11px] sm:text-sm pt-1.5 sm:pt-2 leading-relaxed font-medium">
-                            Теплый свет уходящего дня, пустые улицы и мы просто идем куда глаза глядят, крепко сжимая ладони и ловя эти бесценные секунды тишины.
-                        </p>
                     </div>
                 </div>
             </div>
 
             <!-- Карточка 11: Самая красивая и четкая (oafdci.jpg) -->
             <div class="flex flex-col md:col-span-2 lg:col-span-2 items-center">
-                <div class="polaroid transform rotate-1 w-full max-w-[21rem] sm:max-w-xl rounded-lg">
-                    <div class="w-full h-64 sm:h-[380px] bg-stone-900 overflow-hidden rounded-md mb-3 sm:mb-4 shadow-inner">
+                <div class="polaroid transform rotate-1 w-full max-w-[21rem] sm:max-w-xl rounded-lg" data-src="oafdci.jpg">
+                    <div class="w-full h-64 sm:h-[380px] bg-stone-900 overflow-hidden rounded-md shadow-inner">
                         <img src="oafdci.jpg" alt="Самая любимая фотография" class="w-full h-full object-cover">
-                    </div>
-                    <div class="text-center space-y-1 text-stone-850">
-                        <p class="handwritten text-rose-600 text-2xl sm:text-3xl font-bold">Это лучшая твоя фотография</p>
-                        <p class="text-stone-400 text-[10px] sm:text-xs font-semibold uppercase tracking-widest">Самая красивая и четкая • Моя любимая</p>
-                        <p class="text-stone-600 text-[11px] sm:text-sm pt-1.5 sm:pt-2 leading-relaxed font-medium">
-                            Самый душевный, глубокий и качественный кадр. На нём идеально абсолютно всё — теплое солнце, твоя улыбка и ощущение абсолютного счастья.
-                        </p>
                     </div>
                 </div>
             </div>
@@ -605,7 +877,82 @@
 
 
     <!-- Декоративный разделитель -->
-    <div class="w-full h-[1px] bg-gradient-to-r from-transparent via-rose-900/50 to-transparent my-2 relative z-10"></div>
+    <div class="rule" aria-hidden="true"><span>♥</span></div>
+
+    <!-- Раздел: фотоплёнка -->
+    <section id="film" class="py-12 sm:py-16 max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+        <div class="text-center space-y-2 mb-8 sm:mb-10 reveal">
+            <span class="handwritten text-rose-400 text-2xl sm:text-3xl font-bold">Кадры на свет</span>
+            <h2 class="serif-font text-3xl sm:text-5xl font-bold text-white">Фотоплёнка</h2>
+            <div class="ornament"><i></i><span>♥</span><i></i></div>
+        </div>
+        <div class="film-strip reveal">
+            <div class="film-perf" aria-hidden="true"></div>
+            <div class="film-track">
+                <div class="film-frame" style="--i:0" data-src="relax.jpg">
+                    <img src="relax.jpg" alt="" loading="lazy" decoding="async">
+                    <span class="fnum">01A</span>
+                </div>
+                <div class="film-frame" style="--i:1" data-src="is.jpg">
+                    <img src="is.jpg" alt="" loading="lazy" decoding="async">
+                    <span class="fnum">02A</span>
+                </div>
+                <div class="film-frame" style="--i:2" data-src="ice.jpg">
+                    <img src="ice.jpg" alt="" loading="lazy" decoding="async">
+                    <span class="fnum">03A</span>
+                </div>
+                <div class="film-frame" style="--i:3" data-src="zxcvw.jpg">
+                    <img src="zxcvw.jpg" alt="" loading="lazy" decoding="async">
+                    <span class="fnum">04A</span>
+                </div>
+                <div class="film-frame" style="--i:4" data-src="oafdci.jpg">
+                    <img src="oafdci.jpg" alt="" loading="lazy" decoding="async">
+                    <span class="fnum">05A</span>
+                </div>
+                <div class="film-frame" style="--i:5" data-src="lodq.jpg">
+                    <img src="lodq.jpg" alt="" loading="lazy" decoding="async">
+                    <span class="fnum">06A</span>
+                </div>
+                <div class="film-frame" style="--i:6" data-src="love.jpg">
+                    <img src="love.jpg" alt="" loading="lazy" decoding="async">
+                    <span class="fnum">07A</span>
+                </div>
+                <div class="film-frame" style="--i:7" data-src="you.jpg">
+                    <img src="you.jpg" alt="" loading="lazy" decoding="async">
+                    <span class="fnum">08A</span>
+                </div>
+                <div class="film-frame" style="--i:8" data-src="photo_2026-07-19_17-26-34.jpg">
+                    <img src="photo_2026-07-19_17-26-34.jpg" alt="" loading="lazy" decoding="async">
+                    <span class="fnum">09A</span>
+                </div>
+                <div class="film-frame" style="--i:9" data-src="photo_2026-07-22_14-01-00.jpg">
+                    <img src="photo_2026-07-22_14-01-00.jpg" alt="" loading="lazy" decoding="async">
+                    <span class="fnum">10A</span>
+                </div>
+                <div class="film-frame" style="--i:10" data-src="photo_20_2026-10-06_22-02-55.jpg">
+                    <img src="photo_20_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                    <span class="fnum">11A</span>
+                </div>
+                <div class="film-frame" style="--i:11" data-src="photo_24_2026-10-06_22-02-55.jpg">
+                    <img src="photo_24_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                    <span class="fnum">12A</span>
+                </div>
+                <div class="film-frame" style="--i:12" data-src="photo_33_2026-10-06_22-02-55.jpg">
+                    <img src="photo_33_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                    <span class="fnum">13A</span>
+                </div>
+                <div class="film-frame" style="--i:13" data-src="photo_46_2026-10-06_22-02-55.jpg">
+                    <img src="photo_46_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                    <span class="fnum">14A</span>
+                </div>
+            </div>
+            <div class="film-perf" aria-hidden="true"></div>
+            <div class="film-glare" aria-hidden="true"></div>
+        </div>
+        <p class="film-hint">тяни вбок • нажми на кадр</p>
+    </section>
+
+    <div class="rule" aria-hidden="true"><span>♥</span></div>
 
     <!-- Раздел: остальные наши фото (без подписей) -->
     <section id="more" class="py-12 sm:py-20 max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
@@ -613,32 +960,29 @@
             <span class="handwritten text-rose-400 text-2xl sm:text-3xl font-bold">Просто мы</span>
             <h2 class="serif-font text-3xl sm:text-5xl font-bold text-white">Ещё наши моменты</h2>
             <div class="ornament"><i></i><span>♥</span><i></i></div>
-            <p class="text-rose-300/60 text-xs sm:text-sm">весна 2026 • 6 кадров</p>
+            <p class="text-rose-300/60 text-xs sm:text-sm">весна 2026 • 5 кадров</p>
         </div>
         <div class="photo-grid reveal">
-                <div class="photo-cell feature" data-src="lodq.jpg">
+                <div class="photo-cell feature" style="--i:0" data-src="lodq.jpg">
                     <img src="lodq.jpg" alt="29 марта" loading="lazy" decoding="async">
                 </div>
-                <div class="photo-cell" data-src="ergf.jpg">
+                <div class="photo-cell" style="--i:1" data-src="ergf.jpg">
                     <img src="ergf.jpg" alt="8 апреля" loading="lazy" decoding="async">
                 </div>
-                <div class="photo-cell" data-src="cden.jpg">
+                <div class="photo-cell" style="--i:2" data-src="cden.jpg">
                     <img src="cden.jpg" alt="1 мая" loading="lazy" decoding="async">
                 </div>
-                <div class="photo-cell" data-src="keur.jpg">
-                    <img src="keur.jpg" alt="9 мая" loading="lazy" decoding="async">
-                </div>
-                <div class="photo-cell" data-src="you.jpg">
+                <div class="photo-cell" style="--i:4" data-src="you.jpg">
                     <img src="you.jpg" alt="23 мая" loading="lazy" decoding="async">
                 </div>
-                <div class="photo-cell" data-src="love.jpg">
+                <div class="photo-cell w2" style="--i:5" data-src="love.jpg">
                     <img src="love.jpg" alt="Поцелуев мост" loading="lazy" decoding="async">
                 </div>
         </div>
     </section>
 
     <!-- Декоративный разделитель -->
-    <div class="w-full h-[1px] bg-gradient-to-r from-transparent via-rose-900/50 to-transparent my-2 relative z-10"></div>
+    <div class="rule" aria-hidden="true"><span>♥</span></div>
 
     <!-- Раздел: Сочи (порядок — по дате съёмки с вотермарки камеры) -->
     <section id="sochi" class="py-12 sm:py-20 max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
@@ -649,71 +993,260 @@
             <p class="text-rose-300/60 text-xs sm:text-sm">27 июня — 10 июля 2026 • 18 кадров</p>
         </div>
         <div class="photo-grid reveal">
-                <div class="photo-cell feature" data-src="photo_2026-07-19_17-11-23.jpg">
+                <div class="photo-cell feature" style="--i:0" data-src="photo_2026-07-19_17-11-23.jpg">
                     <img src="photo_2026-07-19_17-11-23.jpg" alt="27 июня, поезд" loading="lazy" decoding="async">
                 </div>
-                <div class="photo-cell" data-src="photo_2026-07-19_17-13-24.jpg">
+                <div class="photo-cell" style="--i:1" data-src="photo_2026-07-19_17-13-24.jpg">
                     <img src="photo_2026-07-19_17-13-24.jpg" alt="29 июня, вокзал Сочи" loading="lazy" decoding="async">
                 </div>
-                <div class="photo-cell" data-src="photo_2026-07-19_17-13-56 (2).jpg">
+                <div class="photo-cell" style="--i:2" data-src="photo_2026-07-19_17-13-56 (2).jpg">
                     <img src="photo_2026-07-19_17-13-56 (2).jpg" alt="30 июня, пальмы" loading="lazy" decoding="async">
                 </div>
-                <div class="photo-cell" data-src="photo_2026-07-19_17-13-56.jpg">
+                <div class="photo-cell" style="--i:3" data-src="photo_2026-07-19_17-13-56.jpg">
                     <img src="photo_2026-07-19_17-13-56.jpg" alt="30 июня" loading="lazy" decoding="async">
                 </div>
-                <div class="photo-cell" data-src="photo_2026-07-19_17-26-34.jpg">
+                <div class="photo-cell" style="--i:4" data-src="photo_2026-07-19_17-26-34.jpg">
                     <img src="photo_2026-07-19_17-26-34.jpg" alt="30 июня, море вечером" loading="lazy" decoding="async">
                 </div>
-                <div class="photo-cell" data-src="photo_2026-07-19_17-26-36.jpg">
+                <div class="photo-cell w2" style="--i:5" data-src="photo_2026-07-19_17-26-36.jpg">
                     <img src="photo_2026-07-19_17-26-36.jpg" alt="30 июня, вечер в цветах" loading="lazy" decoding="async">
                 </div>
-                <div class="photo-cell" data-src="photo_2026-07-19_17-26-39.jpg">
+                <div class="photo-cell" style="--i:6" data-src="photo_2026-07-19_17-26-39.jpg">
                     <img src="photo_2026-07-19_17-26-39.jpg" alt="1 июля, обживаемся" loading="lazy" decoding="async">
                 </div>
-                <div class="photo-cell" data-src="photo_2026-07-03_12-40-33.jpg">
+                <div class="photo-cell" style="--i:7" data-src="photo_2026-07-03_12-40-33.jpg">
                     <img src="photo_2026-07-03_12-40-33.jpg" alt="Агурские водопады" loading="lazy" decoding="async">
                 </div>
-                <div class="photo-cell" data-src="photo_2026-07-03_12-40-47.jpg">
+                <div class="photo-cell" style="--i:8" data-src="photo_2026-07-03_12-40-47.jpg">
                     <img src="photo_2026-07-03_12-40-47.jpg" alt="Агурские водопады" loading="lazy" decoding="async">
                 </div>
-                <div class="photo-cell" data-src="photo_2026-07-19_17-53-19.jpg">
+                <div class="photo-cell h2" style="--i:9" data-src="photo_2026-07-19_17-53-19.jpg">
                     <img src="photo_2026-07-19_17-53-19.jpg" alt="1 июля, Орлиные скалы" loading="lazy" decoding="async">
                 </div>
-                <div class="photo-cell" data-src="photo_2026-07-19_18-23-33.jpg">
+                <div class="photo-cell" style="--i:10" data-src="photo_2026-07-19_18-23-33.jpg">
                     <img src="photo_2026-07-19_18-23-33.jpg" alt="1 июля, вечер в кафе" loading="lazy" decoding="async">
                 </div>
-                <div class="photo-cell" data-src="photo_2026-07-19_18-38-54.jpg">
+                <div class="photo-cell" style="--i:11" data-src="photo_2026-07-19_18-38-54.jpg">
                     <img src="photo_2026-07-19_18-38-54.jpg" alt="4 июля, парк аттракционов" loading="lazy" decoding="async">
                 </div>
-                <div class="photo-cell" data-src="photo_2026-07-06_02-04-26.jpg">
+                <div class="photo-cell" style="--i:0" data-src="photo_2026-07-06_02-04-26.jpg">
                     <img src="photo_2026-07-06_02-04-26.jpg" alt="Олимпийский парк" loading="lazy" decoding="async">
                 </div>
-                <div class="photo-cell" data-src="photo_2026-07-19_18-39-14.jpg">
+                <div class="photo-cell" style="--i:1" data-src="photo_2026-07-19_18-39-14.jpg">
                     <img src="photo_2026-07-19_18-39-14.jpg" alt="5 июля" loading="lazy" decoding="async">
                 </div>
-                <div class="photo-cell" data-src="photo_2026-07-20_03-14-27.jpg">
+                <div class="photo-cell" style="--i:2" data-src="photo_2026-07-20_03-14-27.jpg">
                     <img src="photo_2026-07-20_03-14-27.jpg" alt="8 июля, фонтан" loading="lazy" decoding="async">
                 </div>
-                <div class="photo-cell" data-src="photo_2026-07-22_21-39-11.jpg">
+                <div class="photo-cell" style="--i:3" data-src="photo_2026-07-22_21-39-11.jpg">
                     <img src="photo_2026-07-22_21-39-11.jpg" alt="9 июля, горы" loading="lazy" decoding="async">
                 </div>
-                <div class="photo-cell" data-src="photo_2026-07-22_14-01-00.jpg">
+                <div class="photo-cell w2" style="--i:4" data-src="photo_2026-07-22_14-01-00.jpg">
                     <img src="photo_2026-07-22_14-01-00.jpg" alt="9 июля" loading="lazy" decoding="async">
                 </div>
-                <div class="photo-cell" data-src="photo_2026-07-22_14-03-21.jpg">
+                <div class="photo-cell" style="--i:5" data-src="photo_2026-07-22_14-03-21.jpg">
                     <img src="photo_2026-07-22_14-03-21.jpg" alt="10 июля, последний день" loading="lazy" decoding="async">
                 </div>
         </div>
     </section>
 
+    <!-- Раздел: новые кадры (октябрь 2026) -->
+    <section id="autumn" class="py-12 sm:py-20 max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+        <div class="text-center space-y-2 mb-8 sm:mb-12 reveal">
+            <span class="handwritten text-rose-400 text-2xl sm:text-3xl font-bold">И вот ещё</span>
+            <h2 class="serif-font text-3xl sm:text-5xl font-bold text-white">Новые кадры</h2>
+            <div class="ornament"><i></i><span>♥</span><i></i></div>
+            <p class="text-rose-300/60 text-xs sm:text-sm">октябрь 2026 • 52 кадров</p>
+        </div>
+        <div class="photo-grid reveal">
+                <div class="photo-cell feature" style="--i:0" data-src="photo_1_2026-10-06_22-02-55.jpg">
+                    <img src="photo_1_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:1" data-src="photo_2_2026-10-06_22-02-55.jpg">
+                    <img src="photo_2_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:2" data-src="photo_3_2026-10-06_22-02-55.jpg">
+                    <img src="photo_3_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:3" data-src="photo_4_2026-10-06_22-02-55.jpg">
+                    <img src="photo_4_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:4" data-src="photo_5_2026-10-06_22-02-55.jpg">
+                    <img src="photo_5_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell w2" style="--i:5" data-src="photo_6_2026-10-06_22-02-55.jpg">
+                    <img src="photo_6_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:6" data-src="photo_7_2026-10-06_22-02-55.jpg">
+                    <img src="photo_7_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:7" data-src="photo_8_2026-10-06_22-02-55.jpg">
+                    <img src="photo_8_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:8" data-src="photo_9_2026-10-06_22-02-55.jpg">
+                    <img src="photo_9_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell h2" style="--i:9" data-src="photo_10_2026-10-06_22-02-55.jpg">
+                    <img src="photo_10_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:10" data-src="photo_11_2026-10-06_22-02-55.jpg">
+                    <img src="photo_11_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:11" data-src="photo_12_2026-10-06_22-02-55.jpg">
+                    <img src="photo_12_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:0" data-src="photo_13_2026-10-06_22-02-55.jpg">
+                    <img src="photo_13_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:1" data-src="photo_14_2026-10-06_22-02-55.jpg">
+                    <img src="photo_14_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:2" data-src="photo_15_2026-10-06_22-02-55.jpg">
+                    <img src="photo_15_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:3" data-src="photo_17_2026-10-06_22-02-55.jpg">
+                    <img src="photo_17_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell w2" style="--i:4" data-src="photo_18_2026-10-06_22-02-55.jpg">
+                    <img src="photo_18_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:5" data-src="photo_19_2026-10-06_22-02-55.jpg">
+                    <img src="photo_19_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:6" data-src="photo_20_2026-10-06_22-02-55.jpg">
+                    <img src="photo_20_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:7" data-src="photo_21_2026-10-06_22-02-55.jpg">
+                    <img src="photo_21_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:8" data-src="photo_22_2026-10-06_22-02-55.jpg">
+                    <img src="photo_22_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:9" data-src="photo_24_2026-10-06_22-02-55.jpg">
+                    <img src="photo_24_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell h2" style="--i:10" data-src="photo_25_2026-10-06_22-02-55.jpg">
+                    <img src="photo_25_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:11" data-src="photo_26_2026-10-06_22-02-55.jpg">
+                    <img src="photo_26_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:0" data-src="photo_27_2026-10-06_22-02-55.jpg">
+                    <img src="photo_27_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:1" data-src="photo_28_2026-10-06_22-02-55.jpg">
+                    <img src="photo_28_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:2" data-src="photo_29_2026-10-06_22-02-55.jpg">
+                    <img src="photo_29_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell w2" style="--i:3" data-src="photo_30_2026-10-06_22-02-55.jpg">
+                    <img src="photo_30_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:4" data-src="photo_31_2026-10-06_22-02-55.jpg">
+                    <img src="photo_31_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:5" data-src="photo_32_2026-10-06_22-02-55.jpg">
+                    <img src="photo_32_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:6" data-src="photo_33_2026-10-06_22-02-55.jpg">
+                    <img src="photo_33_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:7" data-src="photo_34_2026-10-06_22-02-55.jpg">
+                    <img src="photo_34_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:8" data-src="photo_35_2026-10-06_22-02-55.jpg">
+                    <img src="photo_35_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:9" data-src="photo_36_2026-10-06_22-02-55.jpg">
+                    <img src="photo_36_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:10" data-src="photo_37_2026-10-06_22-02-55.jpg">
+                    <img src="photo_37_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell h2" style="--i:11" data-src="photo_38_2026-10-06_22-02-55.jpg">
+                    <img src="photo_38_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:0" data-src="photo_39_2026-10-06_22-02-55.jpg">
+                    <img src="photo_39_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:1" data-src="photo_40_2026-10-06_22-02-55.jpg">
+                    <img src="photo_40_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell w2" style="--i:2" data-src="photo_41_2026-10-06_22-02-55.jpg">
+                    <img src="photo_41_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:3" data-src="photo_42_2026-10-06_22-02-55.jpg">
+                    <img src="photo_42_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:4" data-src="photo_43_2026-10-06_22-02-55.jpg">
+                    <img src="photo_43_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:5" data-src="photo_44_2026-10-06_22-02-55.jpg">
+                    <img src="photo_44_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:6" data-src="photo_45_2026-10-06_22-02-55.jpg">
+                    <img src="photo_45_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:7" data-src="photo_46_2026-10-06_22-02-55.jpg">
+                    <img src="photo_46_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:8" data-src="photo_47_2026-10-06_22-02-55.jpg">
+                    <img src="photo_47_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:9" data-src="photo_48_2026-10-06_22-02-55.jpg">
+                    <img src="photo_48_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:10" data-src="photo_49_2026-10-06_22-02-55.jpg">
+                    <img src="photo_49_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:11" data-src="photo_50_2026-10-06_22-02-55.jpg">
+                    <img src="photo_50_2026-10-06_22-02-55.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell h2" style="--i:0" data-src="photo_51_2026-10-06_22-02-56.jpg">
+                    <img src="photo_51_2026-10-06_22-02-56.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell w2" style="--i:1" data-src="photo_52_2026-10-06_22-02-56.jpg">
+                    <img src="photo_52_2026-10-06_22-02-56.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:2" data-src="photo_53_2026-10-06_22-02-56.jpg">
+                    <img src="photo_53_2026-10-06_22-02-56.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+                <div class="photo-cell" style="--i:3" data-src="photo_54_2026-10-06_22-02-56.jpg">
+                    <img src="photo_54_2026-10-06_22-02-56.jpg" alt="" loading="lazy" decoding="async">
+                </div>
+        </div>
+    </section>
+
+    <!-- Декоративный разделитель -->
+    <div class="rule" aria-hidden="true"><span>♥</span></div>
+
+    <!-- Раздел: видео -->
+    <section id="video" class="py-12 sm:py-20 max-w-4xl mx-auto px-4 sm:px-6 relative z-10">
+        <div class="text-center space-y-2 mb-8 sm:mb-12 reveal">
+            <span class="handwritten text-rose-400 text-2xl sm:text-3xl font-bold">Не кадр, а целая минута</span>
+            <h2 class="serif-font text-3xl sm:text-5xl font-bold text-white">Видео</h2>
+            <div class="ornament"><i></i><span>♥</span><i></i></div>
+        </div>
+        <div class="video-frame reveal">
+            <video controls playsinline preload="metadata" src="video_liza.mp4#t=0.1"></video>
+        </div>
+        <p class="text-center text-rose-300/50 text-[10px] sm:text-xs uppercase tracking-widest font-semibold mt-5">нажми play ♥</p>
+    </section>
+
     <!-- Декоративный разделитель перед футером -->
-    <div class="w-full h-[1px] bg-gradient-to-r from-transparent via-rose-900 to-transparent my-2 relative z-10"></div>
+    <div class="rule" aria-hidden="true"><span>♥</span></div>
 
     <!-- Футер -->
     <footer class="py-12 sm:py-20 bg-black/40 border-t border-rose-950/40 text-center relative z-10 backdrop-blur-sm">
         <div class="max-w-md mx-auto px-4 space-y-4">
             <div class="text-rose-500 text-3xl filter drop-shadow(0 0 5px #ef4444)">♥</div>
             <p class="serif-font text-2xl italic font-bold text-white tracking-wider">Матвей & Лиза</p>
+            <div class="foot-strip" aria-hidden="true">
+                <img src="love.jpg" alt="">
+                <img src="zxcvw.jpg" alt="">
+                <img src="photo_20_2026-10-06_22-02-55.jpg" alt="">
+            </div>
             <p class="text-rose-300/60 text-xs sm:text-sm leading-relaxed">
                 Этот альбом — только наше начало. <br>
                 Каждый момент рядом с тобой становится особенным.
@@ -761,6 +1294,80 @@
         // Запуск каждую секунду
         setInterval(updateTimer, 1000);
         updateTimer(); // первый запуск при загрузке страницы
+
+        // ===== Конфетти в разделе дней рождения + бейдж «скоро» =====
+        (function() {
+            const box = document.querySelector('.bd-confetti');
+            if (box) {
+                const colors = ['#f43f5e', '#fb7185', '#fda4af', '#fecdd3', '#fff1f2', '#fbbf24', '#fde68a'];
+                let pieces = '';
+                for (let i = 0; i < 16; i++) {
+                    const c = colors[i % colors.length];
+                    const left = (i * 6.25 + (i % 3) * 1.7).toFixed(2);
+                    const dur = (7 + (i % 5) * 1.6).toFixed(1);
+                    const delay = (i * 0.85).toFixed(2);
+                    const w = 5 + (i % 3) * 2;
+                    pieces += '<i style="left:' + left + '%;width:' + w + 'px;height:' + (w * 1.8) + 'px;background:' + c + ';animation-duration:' + dur + 's;animation-delay:-' + delay + 's"></i>';
+                }
+                box.innerHTML = pieces;
+            }
+        })();
+
+        // ===== Дни рождения: обратный отсчёт до ближайшей даты =====
+        (function() {
+            const cards = Array.from(document.querySelectorAll('.bd-card'));
+            if (!cards.length) return;
+
+            function target(mmdd) {
+                const parts = mmdd.split('-');
+                const m = +parts[0], d = +parts[1];
+                const now = new Date();
+                let t = new Date(now.getFullYear(), m - 1, d, 0, 0, 0);
+                if (t.getTime() <= now.getTime()) t = new Date(now.getFullYear() + 1, m - 1, d, 0, 0, 0);
+                return t;
+            }
+
+            function isToday(mmdd) {
+                const parts = mmdd.split('-');
+                const now = new Date();
+                return now.getMonth() + 1 === +parts[0] && now.getDate() === +parts[1];
+            }
+
+            function tick() {
+                cards.forEach(function(card) {
+                    const mmdd = card.dataset.mmdd;
+                    const note = card.querySelector('.bd-note');
+                    const nums = card.querySelectorAll('.bd-num');
+
+                    if (isToday(mmdd)) {
+                        card.classList.add('is-today');
+                        if (note) note.textContent = 'с днём рождения! ♥';
+                        nums.forEach(function(n) { n.textContent = n.dataset.unit === 'days' ? '0' : '00'; });
+                        const b0 = card.querySelector('.bd-badge');
+                        if (b0) b0.hidden = true;
+                        return;
+                    }
+                    card.classList.remove('is-today');
+                    if (note) note.textContent = 'осталось до праздника';
+
+                    let diff = Math.max(0, target(mmdd).getTime() - Date.now());
+                    const days = Math.floor(diff / 864e5);
+                    const hours = Math.floor(diff / 36e5) % 24;
+                    const minutes = Math.floor(diff / 6e4) % 60;
+                    const seconds = Math.floor(diff / 1e3) % 60;
+                    const val = { days: days, hours: hours, minutes: minutes, seconds: seconds };
+                    const badge = card.querySelector('.bd-badge');
+                    if (badge) badge.hidden = days > 14;
+                    nums.forEach(function(n) {
+                        const v = val[n.dataset.unit];
+                        n.textContent = n.dataset.unit === 'days' ? v : String(v).padStart(2, '0');
+                    });
+                });
+            }
+
+            setInterval(tick, 1000);
+            tick();
+        })();
 
         // ===== Музыкальный плеер =====
         (function() {
@@ -814,10 +1421,36 @@
             });
         })();
 
+        // ===== Фотоплёнка: перетаскивание мышью =====
+        (function() {
+            const track = document.querySelector('.film-track');
+            if (!track) return;
+            let down = false, x0 = 0, left0 = 0, moved = 0;
+
+            track.addEventListener('pointerdown', function(e) {
+                if (e.pointerType === 'touch') return;
+                down = true; moved = 0;
+                x0 = e.clientX; left0 = track.scrollLeft;
+                track.classList.add('dragging');
+            });
+            track.addEventListener('pointermove', function(e) {
+                if (!down) return;
+                const dx = e.clientX - x0;
+                if (Math.abs(dx) > 4) { moved = Math.abs(dx); track.scrollLeft = left0 - dx; }
+            });
+            function up() { down = false; track.classList.remove('dragging'); }
+            track.addEventListener('pointerup', up);
+            track.addEventListener('pointerleave', up);
+            // чтобы после перетаскивания не открывался лайтбокс «на пустом месте»
+            track.addEventListener('click', function(e) {
+                if (moved > 8) { e.stopPropagation(); e.preventDefault(); moved = 0; }
+            }, true);
+        })();
+
         // ===== Просмотр фото во весь экран =====
         (function() {
             // и новые фото из сеток, и старые полароид-карточки — открываются во весь экран
-            const cells = Array.from(document.querySelectorAll('.photo-cell, .polaroid'));
+            const cells = Array.from(document.querySelectorAll('.photo-cell, .polaroid, .film-frame'));
             if (!cells.length) return;
             const box = document.getElementById('lightbox');
             const img = document.getElementById('lb-img');
@@ -869,7 +1502,7 @@
                 entries.forEach(en => {
                     if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
                 });
-            }, { rootMargin: '0px 0px -10% 0px', threshold: 0.05 });
+            }, { rootMargin: '0px 0px -60px 0px', threshold: 0 });
             items.forEach(el => io.observe(el));
         })();
 
